@@ -39,6 +39,33 @@ function UIdesgin() {
     }
   };
 
+  const sendDataToWebhook = async () => {
+    const url = 'https://webhook.site/your-unique-identifier';
+    const data = {
+      "segment_name": "last_10_days_blog_visits",
+      "schema": [
+        {"first_name": "John"},
+        {"last_name": "Doe"}
+      ]
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error('Error sending data to webhook:', error);
+    }
+  };
+
+  
   const handleSaveSegment = async () => {
     const segmentData = {
       segment_name: segmentName,
@@ -46,13 +73,14 @@ function UIdesgin() {
     };
   
     console.log(segmentData);
-    // Your fetch request
+  
     fetch('https://webhook.site/4646f2ef-9ef5-45a3-8ce6-8357840b8559', {
       method: 'POST',
       headers: {
-        'Api-Key': '4646f2ef-9ef5-45a3-8ce6-8357840b8559',
-        'Content-Type': 'UIdesginlication/json',
+        'Content-Type': 'application/json',
+        'Api-Key': '4646f2ef-9ef5-45a3-8ce6-8357840b8559', // Try removing this header
       },
+      mode: 'no-cors',
       body: JSON.stringify(segmentData),
     })
       .then((response) => response.json())
@@ -61,9 +89,11 @@ function UIdesgin() {
       })
       .catch((error) => {
         console.error('Error sending data to webhook:', error.message);
+        console.log('Error response:', error.response); 
+        console.log('Status code:', error.status); 
       });
-
   };
+  
   
   const handleRemoveRow = (index) => {
     console.log(index)
@@ -89,14 +119,14 @@ function UIdesgin() {
             </div>
           </div>
         </div>
-        <div>
+        <div className='newbtnabsolute'>
           <div className='h-100'>
-            <Button variant="outline-secondary" onClick={handleShow}>Save Segmnet</Button>
+            <Button variant="outline-secondary"  onClick={handleShow}>Save Segmnet</Button>
           </div>
         </div>
 
         <Offcanvas placement={'end'} show={show} onHide={handleClose} backdrop="static">
-          <Offcanvas.Header className='bgcolorset' closeButton>
+          <Offcanvas.Header className='bgcolorset' >
             <Offcanvas.Title className='text-white'>
               <div className='d-flex gap-2 align-items-center  '>
                 <div>
@@ -108,9 +138,9 @@ function UIdesgin() {
               </div>
             </Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body>
-            <div className='p-3'>
-              <Form>
+          <Offcanvas.Body className='p-0'>
+            <div className='overflowscroll'>
+              <Form className='p-3'>
                 <div>
                   <Form.Label htmlFor="segmentname" className='fw-bold'>Enter the Name of the Segment</Form.Label>
                   <Form.Control
@@ -140,7 +170,9 @@ function UIdesgin() {
                       <Row key={index} className='align-items-center my-3'>
                         <Col lg={1} md={1} sm={1} className='text-end pe-0'>
                           <div>
-                            <GiPlainCircle color='green' />
+
+                            {data==='account_name'? (<GiPlainCircle color='red' />):(<GiPlainCircle color='green' />)}
+                            
                           </div>
                         </Col>
                         <Col lg={9} md={9} sm={9}>
@@ -202,7 +234,7 @@ function UIdesgin() {
                     </Row>
 
                   <div>
-                    <Button variant="link" onClick={handleAddRow}>
+                    <Button variant="link" className='backcolorset' onClick={handleAddRow}>
                       + Add new schema
                     </Button>
                   </div>
@@ -210,12 +242,12 @@ function UIdesgin() {
 
                 <div className='bottomset'>
                   <div>
-                    <Button variant="primary" onClick={handleSaveSegment}>
+                    <Button variant="primary" className='colorseting' onClick={handleSaveSegment}>
                       Add new schema
                     </Button>
                   </div>
                   <div>
-                    <Button variant="light">Cancel</Button>
+                    <Button variant="light" className='colorfindset' onClick={handleClose}>Cancel</Button>
                   </div>
                 </div>
               </Form>

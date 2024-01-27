@@ -19,6 +19,7 @@
     display: flex;
     gap: 10px;
     padding: 30px;
+    background-color: #f6f6f6;
 }
 .borderset{
     border: 2px solid #7fb1df;
@@ -31,4 +32,31 @@
 .form-select{
     border: 1px solid #111213 !important;
     border-radius:0 !important;   
+}
+
+.newbtnabsolute{
+    position: absolute;
+    z-index: 1500;
+    opacity: 1;
+    padding: 20px 50px 20px 50px;
+}
+
+
+.colorseting{
+    background-color: #39aebc !important;
+    border: 1px solid #39aebc !important;
+    color: white;
+}
+
+.backcolorset{
+    color: #39aebc !important;
+}
+.colorfindset{
+    color: red !important;
+    background-color: white !important;
+}
+
+.overflowscroll{
+    height: 550px;
+    overflow-y: scroll;
 }
