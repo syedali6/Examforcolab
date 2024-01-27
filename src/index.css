@@ -50,6 +50,7 @@
 
 .backcolorset{
     color: #39aebc !important;
+    text-underline-offset: 8px;
 }
 .colorfindset{
     color: red !important;
