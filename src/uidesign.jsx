@@ -9,6 +9,8 @@ import { GiPlainCircle } from "react-icons/gi";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { TiMinus } from "react-icons/ti";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import "../proxy.cjs"
 function UIdesgin() {
   const [show, setShow] = useState(false);
@@ -39,32 +41,7 @@ function UIdesgin() {
     }
   };
 
-  const sendDataToWebhook = async () => {
-    const url = 'https://webhook.site/your-unique-identifier';
-    const data = {
-      "segment_name": "last_10_days_blog_visits",
-      "schema": [
-        {"first_name": "John"},
-        {"last_name": "Doe"}
-      ]
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      console.error('Error sending data to webhook:', error);
-    }
-  };
-
+ 
   
   const handleSaveSegment = async () => {
     const segmentData = {
@@ -74,6 +51,7 @@ function UIdesgin() {
   
     console.log(segmentData);
   
+    toast.success("Data Send Successfully")
     fetch('https://webhook.site/4646f2ef-9ef5-45a3-8ce6-8357840b8559', {
       method: 'POST',
       headers: {
@@ -85,12 +63,11 @@ function UIdesgin() {
     })
       .then((response) => response.json())
       .then((responseData) => {
+      
         console.log('Webhook response:', responseData);
       })
       .catch((error) => {
         console.error('Error sending data to webhook:', error.message);
-        console.log('Error response:', error.response); 
-        console.log('Status code:', error.status); 
       });
   };
   
@@ -108,6 +85,7 @@ function UIdesgin() {
   };
   return (
     <>
+    <ToastContainer />
       <div>
         <div className='p-3 bgcolorset'>
           <div className='d-flex gap-2 align-items-center  '>
@@ -140,9 +118,9 @@ function UIdesgin() {
           </Offcanvas.Header>
           <Offcanvas.Body className='p-0'>
             <div className='overflowscroll'>
-              <Form className='p-3'>
+              <Form className='p-3' >
                 <div>
-                  <Form.Label htmlFor="segmentname" className='fw-bold'>Enter the Name of the Segment</Form.Label>
+                  <Form.Label htmlFor="segmentname" className='fw-bold' >Enter the Name of the Segment</Form.Label>
                   <Form.Control
                   className='my-3'
                     type="text"
@@ -150,6 +128,7 @@ function UIdesgin() {
                     placeholder='Name of the segment'
                     value={segmentName}
                     onChange={(e) => setSegmentName(e.target.value)}
+                    required={true}
                   />
                 </div>
                 <div>
